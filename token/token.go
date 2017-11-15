@@ -29,6 +29,19 @@ const (
 	LET      = "LET"
 )
 
+// 言語で予約済みのキーワード
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
 func NewToken(tokenType TokenType, ch byte) Token {
 	return Token{Type: tokenType, Literal: string(ch)}
+}
+
+func LookupIdent(ident string) TokenType {
+	if t, ok := keywords[ident]; ok {
+		return t
+	}
+	return IDENT
 }
